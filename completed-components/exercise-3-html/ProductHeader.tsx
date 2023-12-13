@@ -24,13 +24,6 @@ const Banner = ({ shouldAnimate = false }: BannerProps) => {
 			changeSlideNum(1);
 		}
 	};
-	const setInert = (node, slideNumber) => {
-		// workaround for React not recognizing inert
-		// https://github.com/facebook/react/pull/24730
-		return (
-			node && (currentSlideNum === slideNumber ? node.removeAttribute('inert', '') : node.setAttribute('inert', ''))
-		);
-	};
 	useEffect(() => {
 		updateSlidePercentage(((currentSlideNum - 1) / 3) * 100);
 	}, [currentSlideNum]);
@@ -50,7 +43,7 @@ const Banner = ({ shouldAnimate = false }: BannerProps) => {
 							className={`grid list-none grid-cols-3 h-full items-center w-[300%] text-white 
                 transition-transform duration-500 ease-out`}
 							style={{ transform: `translateX(-${slidePercentage}%` }}>
-							<li ref={(node) => setInert(node, 1)} className="flex items-center">
+							<li inert={currentSlideNum === 1 ? '' : undefined} className="flex items-center">
 								<div className="text-center mx-auto">
 									<a className="chakra-link popup-link" tabIndex={currentSlideNum === 1 ? 0 : -1}>
 										<div className="text-white">
@@ -62,7 +55,7 @@ const Banner = ({ shouldAnimate = false }: BannerProps) => {
 									</a>
 								</div>
 							</li>
-							<li ref={(node) => setInert(node, 2)} className="flex items-center text-white text-center">
+							<li inert={currentSlideNum === 2 ? '' : undefined} className="flex items-center">
 								<div className="text-center mx-auto">
 									<a
 										className="text-white"
@@ -77,7 +70,7 @@ const Banner = ({ shouldAnimate = false }: BannerProps) => {
 									</a>
 								</div>
 							</li>
-							<li ref={(node) => setInert(node, 3)} className="flex items-center text-white text-center">
+							<li inert={currentSlideNum === 3 ? '' : undefined} className="flex items-center">
 								<div className="text-center mx-auto">
 									<a
 										className="text-white"
